@@ -6,14 +6,14 @@ title: Revelation Labs
 {% for post in site.posts %}
 <div class="post">
   <div class="blog-avatar cat-method">
-    <img src="images/avatar-dan.png" />
+    <img src="{{ post.author_icon }}" />
   </div>
   <div class="blog-post-outerwrap">
     <div class="blog-post-wrapper">
       <div class="blog-post">
         <div class="blog-post-header cat-method">
           <h3>{{ post.title }}</h3>
-          <p class="blog-post-info">Posted {{ post.date | date_to_string }}</p>
+          <p class="blog-post-info">Posted {{ post.date | date_to_string }} - {{ post.author }}</p>
         </div>
         <div class="content">
           <p>
