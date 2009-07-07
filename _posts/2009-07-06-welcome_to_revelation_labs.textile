@@ -5,9 +5,7 @@ author: Dan Herrera
 author_icon: images/avatar-dan.png
 ---
 
-h3. {{ page.title }}
-
-First, let me introduce the development culture we've started here at Revelation.  I'm very proud to say that we practice <a href="http://en.wikipedia.org/wiki/Extreme_Programming">eXtreme Programming</a> or XP.  We believe in short iterations and continually delivering business value in the form of working software.  We believe in testing, or more specifically, in writing tests <a href="http://behaviour-driven.org/">first</a>. We believe in the tremendous value that interaction design brings to a product.
+First, let me introduce the development and design culture we've started here at <a href="http://www.revelationglobal.com">Revelation</a>.  We practice <a href="http://en.wikipedia.org/wiki/Extreme_Programming">eXtreme Programming</a> or XP.  We believe in short iterations and continually delivering business value in the form of working software.  We believe in testing, or more specifically, in writing tests <a href="http://behaviour-driven.org/">first</a>. We believe in the tremendous value that interaction design brings to a product.
 
 In short, we are very proud of our work, our process, and our people, and the community that has inspired us.
 
