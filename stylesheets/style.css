@@ -194,6 +194,7 @@ body {
 
 .blog-post {
   color:#362F2D;
+  background-color: #fff;
   background:transparent url(../images/blog-content-area.png) repeat-y scroll -895px 0;
 }
 
