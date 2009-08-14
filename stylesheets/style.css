@@ -254,3 +254,11 @@ background-position:0 -400px;
   font-size:13px;
   line-height:16px;
 }
+
+.gist .gist-file .gist-data {
+  font-size:80% !important;
+}
+
+.gist-meta {
+font-size:80% !important;
+}

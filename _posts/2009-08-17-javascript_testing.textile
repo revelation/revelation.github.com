@@ -1,0 +1,18 @@
+---
+layout: post
+title: YUI uploader testing with Blue-ridge
+author: James Pozdena
+author_icon: images/avatar-james.png
+---
+
+The Revelation development team has been working hard to bring video uploading and encoding to Revelation. Whenever we do anything around here we always think 'TEST TEST TEST'! We decided to use YUI's uploader, which means that much of our uploading functionality was going to be in JavaScript. In the past we've toyed around with tools like Screw-Unit or just basic Selenium tests to make sure our JavaScript is tested. For video uploading, however, we really needed to find robust full-featured and CI compatible JavaScript testing framework. We landed on <a target='_blank' href="http://github.com/relevance/blue-ridge/tree/master">Blue-ridge</a>. The best thing about Blue-ridge is you can do some pretty powerful JavaScript testing without a browser. Blue-ridge achieves this feat by running in Rhino. <a target='_blank' href="http://www.mozilla.org/rhino/">Rhino</a> is a Java-based JavaScript interpreter written by the guys over at Mozilla. Rhino is capable of rendering a full DOM implementation that runs completely in JavaScript by loading a special version of Env.js, which results in a pure JavaScript browser. Pretty crazy!
+
+To fully test our new video uploader we needed to test private functions that were being called by a listener. This added another level of complexity. To get around this we pulled all the functionality of the methods called by the listener into our own custom name spaced object. The only functionality that we left in the methods directly called by the listener was to call the new methods in our custom name spaced object. This allowed us to have the maximum level of testability of our custom functionality and left the methods that the listener called as a bridge between the private functions and our custom object. I think this is best explained by looking at some code:
+
+<script src="http://gist.github.com/167993.js"></script>
+
+In this example we're using YUI's uploader for video and a JQuery plugin we wrote to create a video uploader. That video upload will call 'onUploadError(event)' if the uploader has an error. That method in turn calls 'display_error' under the 'Revelation.video' name space. This allows us to easily test the functionality of displaying an error and leave the event calling to the YUI uploader. Below a simple test to make sure 'display_video' acts correctly.
+
+<script src="http://gist.github.com/168091.js"></script>
+
+This is a very simplified example but shows how to test something that otherwise is very hard to test. Because of Blue-ridge the test can run under our CI server so we always know this functionality is working fine.
