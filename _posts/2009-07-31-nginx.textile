@@ -1,0 +1,14 @@
+---
+layout: post
+title: Everything you never wanted to know about nginx
+author: Dan Herrera
+author_icon: images/avatar-dan.png
+---
+
+This is the end of a very long week indeed.  We've been working hard adding video to our application, and learned quite a few things about Javascript's foibles and other equally impossible things to do with nginx.
+
+First off, tracking upload_progress with more than one nginx server in a load balanced environment.  The moral that we have from our story is: don't try this at work.  We had a problem where the initial upload would be uploading to one of our nginx servers, and then subsequent requests to other nginx servers for upload_progress would fail, because they weren't being buffered there.  You can do things with good load balancers and 'sticky' sessions, but in our experience, it's just a bad idea altogether.
+
+Next: trying to turn off buffered uploads.  We were attempting to get nginx to act as a straight TCP proxy to a remote nginx server that would handle uploads and track their status with the upload progress module to get around the problem we just described. This doesn't work.  As of this moment, there doesn't seem to be a way to configure nginx to not buffer an upload.
+
+It just turns out that this is a bad idea altogether.  We decided at last to have the client measure the state of their own uploads with the <a href="http://developer.yahoo.com/yui/uploader/">YUI flash uploader widget</a>.  If you don't care for the flash requirement and don't care about upload progress, I can also recommend that you try the <a href="http://developer.yahoo.com/yui/connection/">Yahoo connection manager</a> for asynchronous uploads.  We've used it with great success here.
