@@ -2,7 +2,10 @@
 layout: post
 title: Everything you never wanted to know about nginx
 author: Dan Herrera
-author_icon: images/avatar-dan.png
+author_icon: /images/avatar-dan.png
+snippet: This is the end of a very long week indeed.  We've been working hard adding video to our application, and learned quite a few things about Javascript's foibles and other equally impossible things to do with nginx.
+
+First off, tracking upload_progress with more than one nginx server in a load balanced environment.  The moral that we have from our story is: don't try this at work.  We had a problem where the initial upload would be uploading to one of our nginx servers, and then subsequent requests to other nginx servers for upload_progress would fail, because they weren't being buffered there.  You can do things with good load balancers and 'sticky' sessions, but in our experience, it's just a bad idea altogether
 ---
 
 This is the end of a very long week indeed.  We've been working hard adding video to our application, and learned quite a few things about Javascript's foibles and other equally impossible things to do with nginx.

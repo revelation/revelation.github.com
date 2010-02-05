@@ -2,7 +2,8 @@
 layout: post
 title: "scrollHeight, scrollTop, and outerHeight: Making sense of JavaScript scrolling geometry with JQuery"
 author: Andrew Kurtz & James Pozdena
-author_icon: images/avatar-andrew.png
+author_icon: /images/avatar-andrew.png
+snippet: "This article is written for those who find themselves working on two problems: (1) Getting information about the scrolling state of an html element. (2) Using JavaScript to do so."
 ---
 
 h2. Intro

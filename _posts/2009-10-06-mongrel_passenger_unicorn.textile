@@ -1,0 +1,35 @@
+---
+layout: post
+title: Mongrel vs. Passenger vs. Unicorn
+author: James Pozdena
+author_icon: /images/avatar-james.png
+snippet: We tested mongrel, passenger and the new kid on the block unicorn. Our goal in testing wasn't to test a simple rack or rails app. Our app is complex. We wanted to see what each of these servers could do with a very complicated action in our app.  One that has before_filters, nested partials, big sql lookups, and so on. We also wanted to test this in an environment that was as close to our production stack as possible. So all of our testing was against our staging server, under ssl with a full stack and a copy of our production database
+---
+
+A quick word of caution before reading: everyone should do their own performance testing. Depending on your system/your stack/your code your result my vary. 
+
+We tested mongrel, passenger and the new kid on the block: unicorn. Our goal in testing wasn't to test a simple rack or rails app. Our app is complex. We wanted to see what each of these servers could do with a very complicated action in our app.  One that has before_filters, nested partials, big sql lookups, and so on. We also wanted to test this in an environment that was as close to our production stack as possible. So all of our testing was against our staging server, under ssl with a full stack and a copy of our production database.
+
+Here's our setup:
+  Linux version 2.6.22-xen (Gentoo 4.1.2 p1.0.2)
+  1 2.5ghz dedicated xen virtual CPU
+  768MB memory
+  For each test we booted up 3 workers of each server.
+
+We used <a href="http://www.joedog.org/index/siege-home">siege</a> to test each of the server candidates. The actual command looked something like this:
+
+<script src="http://gist.github.com/203534.js"></script>
+
+The results were surprising. Below is a graph of the average response times for each server. As you can see passenger and mongrel are _almost_ identical. Both have a slope of around 1 second per 5 concurrent requests. Which means for a given second, each 5 concurrent requests you add will make the average response time of all requests go up by a full second. Unicorn on the other hand destroyed each an every request sent to it. It has a slope close to 1 second per 14 concurrent requests! Crazzzy fassssttttt.
+
+<img style='width:607px' src='/images/unicorn/average_response.png'/>
+
+We also measured the max response time (the longest response) for each test. The results are also on unicorn's side. After around 9 concurrent requests, passenger shoots through the roof. Having response times around *16* seconds! Mongrel isn't as bad, but still got response times around 8 seconds once you get into the double digits of concurrent requests. Unicorn is flat. 2.17 seconds is maximum time it ever took to complete the request.
+
+<img style='width:607px' src='/images/unicorn/max_response.png'/>
+
+We aren't going to be jumping to unicorn in the near future. -Still a couple bugs to knock out-. Our configuration still needs a little work. We don't have a monit recipe to monitor the unicorn workers, and our nginx configuration needs some work. But we thought the results were interesting. If you've run some performance tests on your system we'd love to hear about them. Please email us at labs@revelationglobal.com.
+
+Cheers,
+
+James

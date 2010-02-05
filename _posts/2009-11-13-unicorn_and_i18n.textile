@@ -1,0 +1,23 @@
+---
+layout: post
+title: Unicorn, I18n and it's Thread
+author: James Pozdena
+author_icon: /images/avatar-james.png
+snippet: "We're in the process of switching over to Unicorn here at Revelation and yesterday we started to notice some strange behavior with I18n. The I18n locale we set in a previous request was persisting to the next. Digging into I18n we found out why: I18n holds the current locale on a thread-local variable, and unicorn does not start a new thread for each new request, so the current locale or any other thread-local variable will persist across requests. Here's a quick example to show the different behavior of Mongrel vs. Unicorn with thread-local variables."
+---
+
+We're in the process of switching over to Unicorn here at Revelation and yesterday we started to notice some strange behavior with I18n. The I18n locale we set in a previous request was persisting to the next. Digging into I18n we found out why: I18n holds the current locale on a thread-local variable, and unicorn does not start a new thread for each new request, so the current locale or any other thread-local variable will persist across requests. Here's a quick example to show the different behavior of Mongrel vs. Unicorn with thread-local variables.
+
+Here's a really basic Sinatra app:
+
+<script src="http://gist.github.com/233679.js"></script>
+
+If we start this app up with Mongrel and go to /portland we get: "Portland: ". The value of our thread-local variable is nil, because mongrel creates a new thread for each request. 
+
+If we start this app up with Unicorn and go to /portland we get: "Portland: is awesome". Unicorn has kept the same thread across both requests so the thread-local variable is still set to "is awesome".
+
+Since I18n stores locale in a thread-locale variable you have to be very cautious to reset locale for each request or the last requests locale will persist and your users will get some strange behavior.
+
+Cheers,
+
+James

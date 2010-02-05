@@ -1,6 +1,44 @@
 ---
 layout: default
 ---
-<div class="content">
-  {{ content }}
+
+<div class="post">
+  <div class="blog-avatar cat-method">
+    <img src="{{ page.author_icon }}" />
+  </div>
+  <div class="blog-post-outerwrap">
+    <div class="blog-post-wrapper">
+      <div class="blog-post">
+        <div class="blog-post-header cat-method">
+          <h3>{{ page.title }}</h3>
+          <p class="blog-post-info">Posted {{ page.date | date_to_string }} - {{ page.author }}</p>
+        </div>
+        <div class="content">
+          <p>
+            {{ content }}
+          </p>
+          
+          <div id="disqus_thread"></div><script type="text/javascript" src="http://disqus.com/forums/revelationlabs/embed.js"></script><noscript><a href="http://revelationlabs.disqus.com/?url=ref">View the discussion thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+          <script type="text/javascript">
+          //<![CDATA[
+          (function() {
+          	var links = document.getElementsByTagName('a');
+          	var query = '?';
+          	for(var i = 0; i < links.length; i++) {
+          	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+          		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+          	}
+          	}
+          	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/revelationlabs/get_num_replies.js' + query + '"></' + 'script>');
+          })();
+          //]]>
+          </script>
+    
+
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
