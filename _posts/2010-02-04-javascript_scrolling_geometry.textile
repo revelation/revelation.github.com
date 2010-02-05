@@ -1,0 +1,34 @@
+---
+layout: post
+title: "scrollHeight, scrollTop, and outerHeight: Making sense of JavaScript scrolling geometry with JQuery"
+author: Andrew Kurtz & James Pozdena
+author_icon: images/avatar-andrew.png
+---
+
+h2. Intro
+
+This article is written for those who find themselves working on two problems:
+#     Getting information about the scrolling state of an html element.
+#     Using JavaScript to do so.
+    
+Your main foe here is history, as years and years of cruft and backwards compatibility support have all been patiently building up to the tangle that is this moment. Your enemies have gathered, and they will take great strength to overcome.
+
+My methods will require JQuery (1.4 is the current release, but this should apply to many versions). Take a moment to go get it and include it in your project.
+
+h2. Info
+
+To conquer scrolling, learn the difference between these three different scroll state values (see illustration below):
+
+* *element.scrollHeight*: 
+        a plain javascript attribute, note the lack of parenthesis. The entire scrollable height of the element (in pixels, floating point)
+* *JQuery.outerHeight()*: 
+        JQuery method of a scrollable element. The height of the visible portion of the scrollable element (in pixels, floating point)
+* *JQuery.scrollTop()*:
+        JQuery method of a scrollable element. The height of the invisible portion of the element above the current scrolled area. Effectively, this is the offset of the scrollbar from top. (in pixels, floating point)
+bq.
+
+!/images/scroll_explained.png(Scrolling Explained!)!
+
+h2. Examples ...
+
+<script src="http://gist.github.com/295372.js"></script>
